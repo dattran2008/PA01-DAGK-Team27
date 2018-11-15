@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Book car</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	</head>
+	<body>
+		<br>
+		<br>
+		<br>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12 col-md-12">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Name</th>
+								<th>Phone number</th>
+								<th>Address</th>
+								<th>Note</th>
+								<th>State</th>
+							</tr>
+						</thead>
+						<tbody id="products">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script id="template" type="text/x-handlebars-template">
+			{{#each this}}
+				<tr>
+					<td>{{id}}</td>
+					<td>{{name}}</td>
+					<td>{{phone_number}}</td>
+					<td>{{address}}</td>
+					<td>{{note}}</td>
+					<td>{{state}}</td>
+				</tr>
+			{{/each}}
+		</script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script type="text/javascript">
+			ts = 0;
+
+			window.onload = function () {
+				loadCategories();
+			}
+
+			var loadCategories = function () {
+				var url = 'http://localhost:3000/customers?ts=' + ts;
+				axios.get(url)
+					.then(function (res) {
+						ts = res.data.return_ts;
+						var source = document.getElementById('template').innerHTML;
+						var template = Handlebars.compile(source);
+						var html = template(res.data.customers);
+						$('#products').html(html);
+					}).catch(function (err) {
+						console.log(err);
+					}).then(function () {
+						setTimeout(loadCategories, 3500);
+					})
+			}
+		</script>
+	</body>
+</html>
