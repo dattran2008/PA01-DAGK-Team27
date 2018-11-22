@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 const customerCtrl = require('./apiControllers/customerController');
+const staffCtrl = require('./apiControllers/staffControllers');
+const verifyAccessTokenStaff = require('./repos/authRepo').verifyAccessTokenStaff;
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -16,6 +18,8 @@ app.get('/', (req, res) => {
     })
 });
 
-app.use('/customers', customerCtrl);
+app.use('/staffs', staffCtrl);
+
+app.use('/customers', verifyAccessTokenStaff, customerCtrl);
 
 app.listen(port, () => console.log("Server running on port " + port));
