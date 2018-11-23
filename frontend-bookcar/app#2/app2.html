@@ -44,7 +44,7 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
-		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script type="text/javascript">
 			ts = 0;
 
@@ -56,6 +56,7 @@
 				var url = 'http://localhost:3000/customers?ts=' + ts;
 				axios.get(url)
 					.then(function (res) {
+						console.log(res.data.customers);
 						ts = res.data.return_ts;
 						var source = document.getElementById('template').innerHTML;
 						var template = Handlebars.compile(source);
@@ -67,6 +68,19 @@
 						setTimeout(loadCategories, 3500);
 					})
 			}
+		</script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+		<script type="text/javascript">
+
+			var socket = io('http://localhost:3000');
+			socket.on('getCustomers', function(data) {
+				console.log(data);
+				var source = document.getElementById('template').innerHTML;
+				var template = Handlebars.compile(source);
+				var html = template(data);
+				$('#products').html(html);
+			});
+
 		</script>
 	</body>
 </html>
