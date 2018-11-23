@@ -3,15 +3,15 @@ var md5 = require('crypto-js/md5');
 var db = require('../data/bookcar-db');
 var mysql = require('mysql');
 
-var createConnection = () => {
-    return mysql.createConnection({
-    	host: 'localhost',
-    	port: '3306',
-    	user: 'root',
-    	password: 'vantruong97',
-    	database: 'bookcar'
-    });
-}
+// var createConnection = () => {
+//     return mysql.createConnection({
+//     	host: 'localhost',
+//     	port: '3306',
+//     	user: 'root',
+//     	password: '8012',
+//     	database: 'book_car'
+//     });
+// }
 
 exports.add = userEntity => {
 	// userEntity = {
@@ -21,7 +21,7 @@ exports.add = userEntity => {
 
     //console.log(userEntity.Password + '|' + userEntity.Username);
     var md5_pwd = md5(userEntity.Password);
-    var sql = `insert into staffs(Username, Password) values('${userEntity.Username}', '${md5_pwd}')`;
+    var sql = `insert into staffs(username, password) values('${userEntity.Username}', '${md5_pwd}')`;
 
     return db.insert(sql);
 }
@@ -32,8 +32,8 @@ exports.login = loginEntity => {
 	// 	pwd: 'nndkhoa'
 	// }
 
-    var md5_pwd = md5(loginEntity.pwd);
-	var sql = `select * from staffs where Username = '${loginEntity.user}' and Password = '${md5_pwd}'`;
+    var md5_pwd = md5(loginEntity.Password);
+	var sql = `select * from staffs where username = '${loginEntity.Username}' and password = '${md5_pwd}'`;
 	return db.load(sql);
 }
 

@@ -14,8 +14,8 @@ var createConnection = () => {
     	host: 'localhost',
     	port: '3306',
     	user: 'root',
-    	password: 'vantruong97',
-    	database: 'bookcar'
+    	password: '',
+    	database: 'book_car'
     });
 }
 
@@ -42,7 +42,7 @@ exports.generateRefreshToken = () => {
 exports.updateRefreshTokenUser= (userId, rfToken) => {
     return new Promise((resolve, reject) => {
 
-        var sql = `delete from staffRefreshTokenExt where ID = ${userId}`;
+        var sql = `delete from staffRefreshTokenExt where id = ${userId}`;
         db.insert(sql) // delete
             .then(value => {
                 var rdt = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -57,7 +57,7 @@ exports.updateRefreshTokenUser= (userId, rfToken) => {
 
 
 exports.verifyAccessTokenStaff = (req, res, next) => {
-    var token = req.headers['x-access-token'];
+    var token = req.headers['access-token'];
     const refreshToken = req.headers['refresh-token'];
     if (token) {
         jwt.verify(token, SECRET, (err, payload) => {
@@ -65,7 +65,7 @@ exports.verifyAccessTokenStaff = (req, res, next) => {
 
 
                 //console.log(refreshToken);
-                var sql = `select ID from staffRefreshTokenExt where rfToken = '${refreshToken}'`;
+                var sql = `select id from staffRefreshTokenExt where rfToken = '${refreshToken}'`;
                 var ID; 
                 
                 var con = createConnection();
@@ -73,9 +73,9 @@ exports.verifyAccessTokenStaff = (req, res, next) => {
                     if (err) throw err;
                     if(results1.length > 0)
                     {
-                        ID = results1[0].ID;
+                        ID = results1[0].id;
                         console.log(ID);
-                        sql = `select * from staffs where ID = '${ID}'`;
+                        sql = `select * from staffs where id = '${ID}'`;
                         con.query(sql, function(err, results2) {
                             if (err) throw err;
                             console.log(results2[0]);
