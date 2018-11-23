@@ -6,12 +6,18 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
+    "crypto-js": "^3.1.9-1",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
+<<<<<<< HEAD
     "request": "^2.88.0",
     "socket.io": "^2.1.1"
+=======
+    "rand-token": "^0.4.0"
+>>>>>>> 8baea3288a35d2c374318e7b0be099ddcd6d0baf
   },
   "devDependencies": {},
   "scripts": {

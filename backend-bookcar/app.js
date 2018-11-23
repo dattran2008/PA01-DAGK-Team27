@@ -7,6 +7,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 const customerCtrl = require('./apiControllers/customerController');
+const staffCtrl = require('./apiControllers/staffControllers');
+const verifyAccessTokenStaff = require('./repos/authRepo').verifyAccessTokenStaff;
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -18,8 +20,10 @@ app.get('/', (req, res) => {
     })
 });
 
+app.use('/staffs', staffCtrl);
+
 customerCtrl.init(server);
-app.use('/customers', customerCtrl.router);
+app.use('/customers', verifyAccessTokenStaff, customerCtrl.router);
 
 server.on('connection', () => {
     console.log('connection');
