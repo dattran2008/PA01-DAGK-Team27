@@ -6,9 +6,11 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
-const customerCtrl = require('./apiControllers/customerController');
-const staffCtrl = require('./apiControllers/staffControllers');
-const verifyAccessTokenStaff = require('./repos/authRepo').verifyAccessTokenStaff;
+
+const customerCtrl = require('./apiControllers/customerController'),
+    staffCtrl = require('./apiControllers/staffControllers'),
+    verifyAccessTokenStaff = require('./repos/authRepo').verifyAccessTokenStaff,
+    guestCtrl = require('./apiControllers/guestController');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -20,10 +22,11 @@ app.get('/', (req, res) => {
     })
 });
 
-app.use('/staffs', staffCtrl);
-
 customerCtrl.init(server);
+
+app.use('/staffs', staffCtrl);
 app.use('/customers', verifyAccessTokenStaff, customerCtrl.router);
+app.use('/guest', guestCtrl);
 
 server.on('connection', () => {
     console.log('connection');

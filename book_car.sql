@@ -37,11 +37,6 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'name1','0123456789','10 Nguyen hue, Quan 1, TPHCM','Pho di bo','no'),(2,'name1','0345476679','135 Nguyen Van Cu, Quan 5, TPHCM','Khoa hoc tu nhien','no'),(3,'name1','0345476679','135 Nguyen Van Cu, Quan 5, TPHCM','Khoa hoc tu nhien','no'),(4,'name1','0345476679','135 Nguyen Van Cu, Quan 5, TPHCM','Khoa hoc tu nhien','no'),(5,'name1','0345476679','135 Nguyen Van Cu, Quan 5, TPHCM','Khoa hoc tu nhien','no'),(6,'name1','0345476679','135 Nguyen Van Cu, Quan 5, TPHCM','Khoa hoc tu nhien','no'),(7,'name1','0345476679','135 Nguyen Van Cu, Quan 5, TPHCM','Khoa hoc tu nhien','no'),(8,'name1','0345476679','135 Nguyen Van Cu, Quan 5, TPHCM','Khoa hoc tu nhien','no');
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `driver`
@@ -107,22 +102,3 @@ CREATE TABLE `refreshtoken` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `refreshtoken`
---
-
-LOCK TABLES `refreshtoken` WRITE;
-/*!40000 ALTER TABLE `refreshtoken` DISABLE KEYS */;
-/*!40000 ALTER TABLE `refreshtoken` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-11-15 23:59:08

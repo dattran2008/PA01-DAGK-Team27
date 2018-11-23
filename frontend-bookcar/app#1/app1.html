@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dictionary</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <br>
+    <h1 style="text-align:center">
+        <span class="label label-danger"> App#1: Guest Request Service</span>
+    </h1>
+
+    <!-- Guest UI -->
+    <div class="container-fluid" style="padding-top: 3rem">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-3 col-sm-3 col-md-3">Họ tên</th>
+                            <th class="col-xs-2 col-sm-2 col-md-2">Điện thoại</th>
+                            <th class="col-xs-3 col-sm-3 col-md-3">Địa chỉ đón khách</th>
+                            <th>Ghi chú (nếu có)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dictionary">
+                        <tr class="success">
+                            <td id="w_name">
+                                <input class="form-control" name="name" id="inputName" placeholder="Nhập họ tên khách hàng">
+                            </td>
+                            <td id="w_phone" style="width: 250px">
+                                <input class="form-control" name="phone" id="inputPhone" placeholder="Nhập SĐT">
+                            </td>
+                            <td id="w_address">
+                                <input class="form-control" name="address" id="inputAddress" placeholder="Nhập địa chỉ đón khách">
+                            </td>
+                            <td id="w_note">
+                                <input class="form-control" name="notes" id="inputNotes" placeholder="Ghi chú (nếu có)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button style="font-size:20px; margin-left: 25em" id="search" class="btn btn-success" onclick="onClick()">
+                    Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+    <script src="dictionary.app.js"></script>
+</body>
+
+</html>
