@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 			console.log(value);
 			res.statusCode = 201;
 			res.json(req.body);
-			request.get('http://localhost:3000/customers', (err, response, body) =>{
+			request.get('http://localhost:3000/locate', (err, response, body) =>{
 				io.emit('getCustomers', JSON.parse(body));
 			})
 		})
@@ -54,7 +54,7 @@ router.put('/', (req, res) => {
 			console.log(value);
 			res.statusCode = 201;
 			res.json(req.body);
-			request.get('http://localhost:3000/customers', (err, response, body) =>{
+			request.get('http://localhost:3000/locate', (err, response, body) =>{
 				io.emit('getCustomers', JSON.parse(body));
 			})
 		})

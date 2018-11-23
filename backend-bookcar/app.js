@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 app.use('/staffs', staffCtrl);
 
 customerCtrl.init(server);
-app.use('/customers', verifyAccessTokenStaff, customerCtrl.router);
+app.use('/locate', verifyAccessTokenStaff, customerCtrl.router);
 
 server.on('connection', () => {
     console.log('connection');
