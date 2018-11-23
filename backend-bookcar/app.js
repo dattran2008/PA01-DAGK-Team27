@@ -1,5 +1,7 @@
 const express = require('express');
+const http = require('http');
 const app = express();
+const server = http.Server(app);
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -16,6 +18,14 @@ app.get('/', (req, res) => {
     })
 });
 
-app.use('/customers', customerCtrl);
+customerCtrl.init(server);
+app.use('/customers', customerCtrl.router);
 
-app.listen(port, () => console.log("Server running on port " + port));
+server.on('connection', () => {
+    console.log('connection');
+});
+
+// app.listen(port, () => console.log("Server running on port " + port));
+server.listen(port, () => {
+    console.log(`listening on *:${port}`);
+});
