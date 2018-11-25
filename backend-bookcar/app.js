@@ -25,8 +25,8 @@ app.get('/', (req, res) => {
 customerCtrl.init(server);
 
 app.use('/staffs', staffCtrl);
-app.use('/customers', verifyAccessTokenStaff, customerCtrl.router);
-app.use('/guest', guestCtrl);
+app.use('/locate', verifyAccessTokenStaff, customerCtrl.router);
+//app.use('/guest', guestCtrl);
 
 server.on('connection', () => {
     console.log('connection');

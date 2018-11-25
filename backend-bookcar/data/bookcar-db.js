@@ -5,8 +5,8 @@ var createConnection = () => {
     	host: 'localhost',
     	port: '3306',
     	user: 'root',
-    	password: 'vantruong97',
-    	database: 'bookcar'
+    	password: '',
+    	database: 'book_car'
     });
 }
 

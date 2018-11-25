@@ -15,22 +15,25 @@ function init(httpServer) {
 module.exports.init = init;
 
 router.post('/', (req, res) => {
-	if(req.body.name === '' 
-    || req.body.phone_number === '' 
-    || req.body.address === '' 
-    || req.body.state === ''
-    ) {
-        res.status(422).json({ msg: 'Invalid data' });
-        return;
-    }
+	if (req.body.name === ''
+		|| req.body.phone_number === ''
+		|| req.body.address === ''
+		|| req.body.state === ''
+	) {
+		res.status(422).json({ msg: 'Invalid data' });
+		return;
+	}
 	customerRepo.add(req.body)
 		.then(value => {
 			console.log(value);
 			res.statusCode = 201;
 			res.json(req.body);
-			request.get('http://localhost:3000/customers', (err, response, body) =>{
-				io.emit('getCustomers', JSON.parse(body));
-			})
+			customerRepo.loadAll()
+				.then(customers => {
+					io.emit('getCustomers', customers);
+				}).catch(err => {
+					console.log(err);
+				})
 		})
 		.catch(err => {
 			console.log(err);
@@ -40,23 +43,26 @@ router.post('/', (req, res) => {
 })
 
 router.put('/', (req, res) => {
-	if(req.body.id === null 
-	|| req.body.name === '' 
-    || req.body.phone_number === '' 
-    || req.body.address === '' 
-    || req.body.state === ''
-    ) {
-        res.status(422).json({ msg: 'Invalid data' });
-        return;
-    }
+	if (req.body.id === null
+		|| req.body.name === ''
+		|| req.body.phone_number === ''
+		|| req.body.address === ''
+		|| req.body.state === ''
+	) {
+		res.status(422).json({ msg: 'Invalid data' });
+		return;
+	}
 	customerRepo.update(req.body)
 		.then(value => {
 			console.log(value);
 			res.statusCode = 201;
 			res.json(req.body);
-			request.get('http://localhost:3000/customers', (err, response, body) =>{
-				io.emit('getCustomers', JSON.parse(body));
-			})
+			customerRepo.loadAll()
+				.then(customers => {
+					io.emit('getCustomers', customers);
+				}).catch(err => {
+					console.log(err);
+				})
 		})
 		.catch(err => {
 			console.log(err);
