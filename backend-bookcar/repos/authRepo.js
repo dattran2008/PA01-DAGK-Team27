@@ -5,28 +5,33 @@ var moment = require('moment');
 var StaffRepo = require('./staffRepo');
 var db = require('../data/bookcar-db');
 var mysql = require('mysql')
-const SECRET = 'ABCDEF';
+const STAFF_SECRET = 'ABCDEF';
+const DRIVER_SECRET = 'VANTRUONG97'
 const AC_LIFETIME = 60; // seconds
 //var Auth = require('./auth')
 
-var createConnection = () => {
-    return mysql.createConnection({
-    	host: 'localhost',
-    	port: '3306',
-    	user: 'root',
-    	password: 'vantruong97',
-    	database: 'bookcar'
-    });
-}
 
 
-exports.generateAccessToken = userEntity => {
+exports.generateStaffAccessToken = userEntity => {
     var payload = {
         user: userEntity,
         info: 'more info'
     }
 
-    var token = jwt.sign(payload, SECRET, {
+    var token = jwt.sign(payload, STAFF_SECRET, {
+        expiresIn: AC_LIFETIME
+    });
+
+    return token;
+}
+
+exports.generateDriverAccessToken = userEntity => {
+    var payload = {
+        user: userEntity,
+        info: 'more info'
+    }
+
+    var token = jwt.sign(payload, DRIVER_SECRET, {
         expiresIn: AC_LIFETIME
     });
 
@@ -34,12 +39,13 @@ exports.generateAccessToken = userEntity => {
 }
 
 
+
 exports.generateRefreshToken = () => {
     const SIZE = 80;
     return rndToken.generate(SIZE);
 }
 
-exports.updateRefreshTokenUser= (userId, rfToken) => {
+exports.updateRefreshTokenStaff= (userId, rfToken) => {
     return new Promise((resolve, reject) => {
 
         var sql = `delete from staffRefreshTokenExt where ID = ${userId}`;
@@ -55,80 +61,78 @@ exports.updateRefreshTokenUser= (userId, rfToken) => {
 }
 
 
+exports.generateDriverAccessTokenFromRefreshToken = driverRefreshToken =>{
+    var sql = `select ID from driverRefreshTokenExt where rfToken = '${driverRefreshToken}'`;
+                var ID; 
+                db.load(sql)
+                    .then(rows=>{
+                        if(rows.length > 0)
+                        {
+                            ID = rows[0].ID;
+                            console.log(ID);
+                            sql = `select * from accounts where ID = '${ID}' AND Type = 'Driver' `;
+                            return db.load(sql)
+                            /*
+                                .then(results=>{
+                                    if(results.length > 0)
+                                    {
+                                        var newToken = exports.generateDriverAccessToken(results[0]);
+                                        console.log('New token:        ' + newToken);
+                                        return message.json({
+                                            statusCode: 201,
+                                            msg: 'New TOKEN',
+                                            token: newToken,
+                                            error: err
+                                        })
+                                    }
+                                    else
+                                    {
+
+                                        return message.json({
+                                        statusCode: 401,
+                                        msg: 'INVALID TOKEN',
+                                        error: err})
+                                    }
+                                })
+                                */
+
+                        }
+                        else
+                        {
+                            return message.json({
+                            statusCode: 401,
+                            msg: 'INVALID TOKEN 2',
+                            error: err})
+                        }
+                    })
+}
+
+
 
 exports.verifyAccessTokenStaff = (req, res, next) => {
     var token = req.headers['x-access-token'];
-    const refreshToken = req.headers['refresh-token'];
     if (token) {
-        jwt.verify(token, SECRET, (err, payload) => {
+        jwt.verify(token, STAFF_SECRET, (err, payload) => {
             if (err) {
-
-
-                //console.log(refreshToken);
-                var sql = `select ID from staffRefreshTokenExt where rfToken = '${refreshToken}'`;
-                var ID; 
-                
-                var con = createConnection();
-                con.query(sql, function(err, results1) {
-                    if (err) throw err;
-                    if(results1.length > 0)
-                    {
-                        ID = results1[0].ID;
-                        console.log(ID);
-                        sql = `select * from staffs where ID = '${ID}'`;
-                        con.query(sql, function(err, results2) {
-                            if (err) throw err;
-                            console.log(results2[0]);
-                            if(results2.length > 0)
-                            {
-                                var newToken = exports.generateAccessToken(results2[0]);
-                                console.log('New token:        ' + newToken);
-                                console.log(res);
-                                res.statusCode = 201;
-                                res.json({
-                                    msg: 'New TOKEN',
-                                    token: newToken,
-                                    error: err
-                                })
-                            }
-                            else{
-                                res.statusCode = 401;
-                                res.json({
-                                msg: 'INVALID TOKEN',
-                                error: err})
-                            }
-                          });
-                    
-                    }
-                    
-                  });
-                  /*
-                var rows = db.load(sql)
-                if (rows.length > 0) {
-                    var ID = rows[0];
-                    console.log('ID:  ' + ID);
-                    sql = `select * from staffs where ID = '${ID}'`;
-                    rows = db.load(sql)
-                    
-                    if(rows.length > 0)
-                                
-                    var newToken = exports.generateAccessToken(rows[0]);
-                    console.log('New token:        ' + newToken);
-                    console.log(res);
-                    res.statusCode = 201;
+                if(err.name == 'TokenExpiredError')
+               {
+                    res.statusCode = 405;
                     res.json({
-                        msg: 'New TOKEN',
-                        token: newToken,
+                        name: 'TokenExpiredError',
+                        message: 'jwt expired',
                         error: err
-                        })
-                    }
-                else{
-                    res.statusCode = 401;
-                    res.json({
-                    msg: 'INVALID TOKEN',
-                    error: err
                     })
-                }*/
+                }
+                else
+                {
+                    res.statusCode = 406;
+                    res.json({
+                        name: 'TokenInvalid',
+                        message: 'jwt token invalid',
+                        error: err
+                    })
+                }
+
             } else {
                 req.token_payload = payload;
                 next();
@@ -142,3 +146,59 @@ exports.verifyAccessTokenStaff = (req, res, next) => {
     }
 }
 
+
+
+exports.updateRefreshTokenDriver= (userId, rfToken) => {
+    return new Promise((resolve, reject) => {
+
+        var sql = `delete from driverRefreshTokenExt where ID = ${userId}`;
+        db.insert(sql) // delete
+            .then(value => {
+                var rdt = moment().format('YYYY-MM-DD HH:mm:ss');
+                sql = `insert into driverRefreshTokenExt values(${userId}, '${rfToken}', '${rdt}')`;
+                return db.insert(sql);
+            })
+            .then(value => resolve(value))
+            .catch(err => reject(err));
+    });
+}
+
+
+
+exports.verifyAccessTokenDriver = (req, res, next) => {
+    var token = req.headers['x-access-token'];
+    const refreshToken = req.headers['refresh-token'];
+    if (token) {
+        jwt.verify(token, DRIVER_SECRET, (err, payload) => {
+            if (err) {
+                if(err.name == 'TokenExpiredError')
+                {
+                    res.statusCode = 405;
+                    res.json({
+                        name: 'TokenExpiredError',
+                        message: 'jwt expired',
+                        error: err
+                    })
+                }
+                else
+                {
+                    res.statusCode = 406;
+                    res.json({
+                        name: 'TokenInvalid',
+                        message: 'jwt token invalid',
+                        error: err
+                    })
+                }
+
+            } else {
+                req.token_payload = payload;
+                next();
+            }
+        });
+    } else {
+        res.statusCode = 403;
+        res.json({
+            msg: 'NO_TOKEN'
+        })
+    }
+}

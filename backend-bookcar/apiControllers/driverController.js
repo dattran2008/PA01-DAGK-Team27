@@ -1,11 +1,11 @@
 var express = require('express');
 
-var staffRepo = require('../repos/staffRepo');
-
+var driverRepo = require('../repos/driverRepo');
+var authRepo = require('../repos/authRepo')
 var router = express.Router();
 
 router.post('/', (req, res) => {
-	staffRepo.add(req.body)
+	driverRepo.add(req.body)
 		.then(value => {
 			console.log(value);
 			res.statusCode = 201;
@@ -18,17 +18,14 @@ router.post('/', (req, res) => {
 		})
 })
 
+
+
 router.get('/', (req, res) => {
     res.json({
-        msg: 'Welcome to staff Api'
+        msg: 'Welcome to driver Api'
     })
 });
 
-
-router.post('/acess', (req, res) =>{
-	var refreshToken = req.header['refresh-token'];
-	authRepo.generateStaffAccessTokenFromRefreshToken(refreshToken);
-})
 
 
 module.exports = router;
