@@ -8,7 +8,13 @@ const cors = require('cors');
 const port = process.env.PORT || 3000;
 const customerCtrl = require('./apiControllers/customerController');
 const staffCtrl = require('./apiControllers/staffControllers');
+const staffLoginCtrl = require('./apiControllers/staffLoginController');
 const verifyAccessTokenStaff = require('./repos/authRepo').verifyAccessTokenStaff;
+
+const driverCtrl = require('./apiControllers/driverController');
+const driverLoginCtrl = require('./apiControllers/driverLoginController');
+const verifyAccessTokenDriver = require('./repos/authRepo').verifyAccessTokenDriver;
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -20,10 +26,15 @@ app.get('/', (req, res) => {
     })
 });
 
-app.use('/staffs', staffCtrl);
+
+app.use('/staff/login', staffLoginCtrl);
+app.use('/staffs', verifyAccessTokenStaff, staffCtrl);
+
+app.use('/driver/login', driverLoginCtrl);
+app.use('/drivers',verifyAccessTokenDriver, driverCtrl);
 
 customerCtrl.init(server);
-app.use('/locate', verifyAccessTokenStaff, customerCtrl.router);
+app.use('/locate', customerCtrl.router);
 
 server.on('connection', () => {
     console.log('connection');
