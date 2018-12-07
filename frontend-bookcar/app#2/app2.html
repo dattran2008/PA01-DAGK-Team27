@@ -1,86 +1,250 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Book car</title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	</head>
-	<body>
-		<br>
-		<br>
-		<br>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-12 col-md-12">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Name</th>
-								<th>Phone number</th>
-								<th>Address</th>
-								<th>Note</th>
-								<th>State</th>
-							</tr>
-						</thead>
-						<tbody id="products">
-						</tbody>
-					</table>
-				</div>
+
+<head>
+	<title>App#2</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	 crossorigin="anonymous">
+	<style>
+		#map {
+			width: 1000px;
+			height: 500px;
+			margin: 100px auto;
+		}
+
+		/* Optional: Makes the sample page fill the window. */
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		.controls {
+			margin-top: 10px;
+			border: 1px solid transparent;
+			border-radius: 2px 0 0 2px;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			height: 32px;
+			outline: none;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+		}
+
+		#origin-input,
+		#destination-input {
+			background-color: #fff;
+			font-family: Roboto;
+			font-size: 15px;
+			font-weight: 300;
+			margin-left: 12px;
+			padding: 0 11px 0 13px;
+			text-overflow: ellipsis;
+			width: 200px;
+		}
+
+		#origin-input:focus,
+		#destination-input:focus {
+			border-color: #4d90fe;
+		}
+
+		#mode-selector {
+			color: #fff;
+			background-color: #4d90fe;
+			margin-left: 12px;
+			padding: 5px 11px 0px 11px;
+		}
+
+		#mode-selector label {
+			font-family: Roboto;
+			font-size: 13px;
+			font-weight: 300;
+		}
+	</style>
+</head>
+
+<body>
+	<br>
+	<h1 style="text-align:center">
+		<span class="label label-danger"> App#2: LOCATION IDENTIFIER </span>
+	</h1>
+	<!-- Request List UI -->
+	<div class="container-fluid" style="padding-top: 2rem">
+		<h3>
+			<div class="nav nav-pills" style="padding-bottom: 1rem">
+				<li role="presentation" class="active">
+					<a href="#"> Request Received Table
+						<span class="badge">42</span>
+					</a>
+				</li>
+			</div>
+		</h3>
+		<!-- Table -->
+		<div class="table-responsive">
+			<div>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th class="col-xs-1 col-sm-1 col-md-1">ID</th>
+							<th class="col-xs-3 col-sm-3 col-md-3">Họ tên</th>
+							<th class="col-xs-2 col-sm-2 col-md-2">Điện thoại</th>
+							<th class="col-xs-3 col-sm-3 col-md-3">Địa chỉ đón khách</th>
+							<th>Ghi chú (nếu có)</th>
+						</tr>
+					</thead>
+					<tbody id="dictionary">
+						<tr class="info">
+							<td id="w_id">
+
+							</td>
+							<td id="w_name">
+
+							</td>
+							<td id="w_phone" style="width: 250px">
+
+							</td>
+							<td id="w_address">
+
+							</td>
+							<td id="w_note">
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
 			</div>
 		</div>
-		<script id="template" type="text/x-handlebars-template">
-			{{#each this}}
-				<tr>
-					<td>{{id}}</td>
-					<td>{{name}}</td>
-					<td>{{phone_number}}</td>
-					<td>{{address}}</td>
-					<td>{{note}}</td>
-					<td>{{state}}</td>
-				</tr>
-			{{/each}}
-		</script>
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
-		<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-		<script type="text/javascript">
-			ts = 0;
+	</div>
 
-			window.onload = function () {
-				loadCategories();
-			}
+	<!-- Google Map UI -->
+	<input id="origin-input" class="controls" type="text" placeholder="Enter an origin location">
+	<input id="destination-input" class="controls" type="text" placeholder="Enter a destination location">
+	<div id="mode-selector" class="controls">
+	  <input type="radio" name="type" id="changemode-walking" checked="checked">
+	  <label for="changemode-walking">Walking</label>
+	  <input type="radio" name="type" id="changemode-transit">
+	  <label for="changemode-transit">Transit</label>
+	  <input type="radio" name="type" id="changemode-driving">
+	  <label for="changemode-driving">Driving</label>
+	</div>
+	<div id="map"></div>
 
-			var loadCategories = function () {
-				var url = 'http://localhost:3000/customers?ts=' + ts;
-				axios.get(url)
-					.then(function (res) {
-						console.log(res.data.customers);
-						ts = res.data.return_ts;
-						var source = document.getElementById('template').innerHTML;
-						var template = Handlebars.compile(source);
-						var html = template(res.data.customers);
-						$('#products').html(html);
-					}).catch(function (err) {
-						console.log(err);
-					}).then(function () {
-						setTimeout(loadCategories, 3500);
-					})
-			}
-		</script> -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-		<script type="text/javascript">
 
-			var socket = io('http://localhost:3000');
-			socket.on('getCustomers', function(data) {
-				console.log(data);
-				var source = document.getElementById('template').innerHTML;
-				var template = Handlebars.compile(source);
-				var html = template(data);
-				$('#products').html(html);
+	<!-- Google Map script -->
+	<script>
+		function initMap() {
+			var geocode = { lat: 10.24232, lng: 106.51502 } //set default location
+			var map = new google.maps.Map(document.getElementById('map'), {
+				center: geocode,
+				zoom: 13,
+				scrollwheel: true
 			});
 
-		</script>
-	</body>
+			//The marker, positioned at Uluru
+			var marker = new google.maps.Marker({
+				position: geocode,
+				animation: google.maps.Animation.BOUNCE,
+				map: map
+			});
+
+			//Test move marker
+			google.maps.event.addListener(map, 'click', function (event) {
+				addMarker({ geocode: event.latlng });
+			});
+
+			new AutocompleteDirectionsHandler(map);
+		}
+
+		function AutocompleteDirectionsHandler(map) {
+			this.map = map;
+			this.originPlaceId = null;
+			this.destinationPlaceId = null;
+			this.travelMode = 'WALKING';
+			var originInput = document.getElementById('origin-input');
+			var destinationInput = document.getElementById('destination-input');
+			var modeSelector = document.getElementById('mode-selector');
+			this.directionsService = new google.maps.DirectionsService;
+			this.directionsDisplay = new google.maps.DirectionsRenderer;
+			this.directionsDisplay.setMap(map);
+
+			var originAutocomplete = new google.maps.places.Autocomplete(
+				originInput, { placeIdOnly: true });
+			var destinationAutocomplete = new google.maps.places.Autocomplete(
+				destinationInput, { placeIdOnly: true });
+
+			this.setupClickListener('changemode-walking', 'WALKING');
+			this.setupClickListener('changemode-transit', 'TRANSIT');
+			this.setupClickListener('changemode-driving', 'DRIVING');
+
+			this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+			this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+			this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+			this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+			this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+		}
+
+		// Sets a listener on a radio button to change the filter type on Places
+		// Autocomplete.
+		AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
+			var radioButton = document.getElementById(id);
+			var me = this;
+			radioButton.addEventListener('click', function () {
+				me.travelMode = mode;
+				me.route();
+			});
+		};
+
+		AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
+			var me = this;
+			autocomplete.bindTo('bounds', this.map);
+			autocomplete.addListener('place_changed', function () {
+				var place = autocomplete.getPlace();
+				if (!place.place_id) {
+					window.alert("Please select an option from the dropdown list.");
+					return;
+				}
+				if (mode === 'ORIG') {
+					me.originPlaceId = place.place_id;
+				} else {
+					me.destinationPlaceId = place.place_id;
+				}
+				me.route();
+			});
+
+		};
+
+		AutocompleteDirectionsHandler.prototype.route = function () {
+			if (!this.originPlaceId || !this.destinationPlaceId) {
+				return;
+			}
+			var me = this;
+
+			this.directionsService.route({
+				origin: { 'placeId': this.originPlaceId },
+				destination: { 'placeId': this.destinationPlaceId },
+				travelMode: this.travelMode
+			}, function (response, status) {
+				if (status === 'OK') {
+					me.directionsDisplay.setDirections(response);
+				} else {
+					window.alert('Directions request failed due to ' + status);
+				}
+			});
+		};
+
+
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt-z3ICdN7F6QAM0cUuw21ZUF_BYKMfw0&libraries=places&callback=initMap"
+	 async defer></script>
+	<!-- Another Script -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+	<script src="app2.app.js"></script>
+</body>
+
 </html>
