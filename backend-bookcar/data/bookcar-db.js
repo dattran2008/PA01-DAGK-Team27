@@ -2,11 +2,11 @@ var mysql = require('mysql');
 
 var createConnection = () => {
     return mysql.createConnection({
-    	host: 'localhost',
-    	port: '3306',
-    	user: 'root',
-    	password: '',
-    	database: 'book_car'
+        host: 'localhost',
+        port: '3306',
+        user: 'root',
+        password: '',
+        database: 'tester'
     });
 }
 
@@ -16,9 +16,9 @@ exports.load = sql => {
         cn.connect();
         cn.query(sql, (err, rows, fields) => {
             if (err) {
-            	reject(err);
+                reject(err);
             } else {
-            	resolve(rows);
+                resolve(rows);
             }
 
             cn.end();

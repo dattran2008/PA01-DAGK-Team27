@@ -14,10 +14,10 @@
         <span class="label label-danger"> App#1: Guest Request Service</span>
     </h1>
 
-    <!-- Guest UI -->
+    <!-- Guest Request UI -->
     <div class="container-fluid" style="padding-top: 3rem">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <form class="col-xs-12 col-sm-12 col-md-12">
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -27,35 +27,44 @@
                             <th>Ghi chú (nếu có)</th>
                         </tr>
                     </thead>
-                    <tbody id="dictionary">
+                    <tbody id="request">
                         <tr class="success">
-                            <td id="w_name">
+                            <td id="name">
                                 <input class="form-control" name="name" id="inputName" placeholder="Nhập họ tên khách hàng">
                             </td>
-                            <td id="w_phone" style="width: 250px">
+                            <td id="phone" style="width: 250px">
                                 <input class="form-control" name="phone" id="inputPhone" placeholder="Nhập SĐT">
                             </td>
-                            <td id="w_address">
+                            <td id="address">
                                 <input class="form-control" name="address" id="inputAddress" placeholder="Nhập địa chỉ đón khách">
                             </td>
-                            <td id="w_note">
+                            <td id="note">
                                 <input class="form-control" name="notes" id="inputNotes" placeholder="Ghi chú (nếu có)">
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <button onclick="onBtnClick()" style="font-size:20px; margin-left: 25em" id="search" class="btn btn-success">
+                <button type="submit"" style=" font-size:20px; margin-left: 25em" id="search" class="btn btn-success">
                     Request
                 </button>
-            </div>
+
+                <div id="alert-success" class="alert alert-success">
+                    <strong>Success!</strong>
+                </div>
+                <div id="alert-danger" class="alert alert-danger">
+                    <strong>Error!</strong>
+                </div>
+            </form>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
-    <script src="app1.app.js"></script>
+
+    <script src="app1.js"></script>
+
 </body>
 
 </html>

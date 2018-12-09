@@ -6,18 +6,12 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
-<<<<<<< HEAD
 
-const customerCtrl = require('./apiControllers/customerController'),
-    staffCtrl = require('./apiControllers/staffControllers'),
-    verifyAccessTokenStaff = require('./repos/authRepo').verifyAccessTokenStaff,
-    guestCtrl = require('./apiControllers/guestController');
-=======
 const customerCtrl = require('./apiControllers/customerController');
+
 const staffCtrl = require('./apiControllers/staffControllers');
 const staffLoginCtrl = require('./apiControllers/staffLoginController');
 const verifyAccessTokenStaff = require('./repos/authRepo').verifyAccessTokenStaff;
->>>>>>> token
 
 const driverCtrl = require('./apiControllers/driverController');
 const driverLoginCtrl = require('./apiControllers/driverLoginController');
@@ -34,23 +28,17 @@ app.get('/', (req, res) => {
     })
 });
 
-<<<<<<< HEAD
-customerCtrl.init(server);
-
-app.use('/staffs', staffCtrl);
-app.use('/locate', verifyAccessTokenStaff, customerCtrl.router);
-//app.use('/guest', guestCtrl);
-=======
-
+//Staff
 app.use('/staff/login', staffLoginCtrl);
 app.use('/staffs', verifyAccessTokenStaff, staffCtrl);
 
+// Driver
 app.use('/driver/login', driverLoginCtrl);
-app.use('/drivers',verifyAccessTokenDriver, driverCtrl);
+app.use('/drivers', verifyAccessTokenDriver, driverCtrl);
 
+// Customer
 customerCtrl.init(server);
-app.use('/locate', customerCtrl.router);
->>>>>>> token
+app.use('/request', customerCtrl.router);
 
 server.on('connection', () => {
     console.log('connection');
@@ -58,5 +46,5 @@ server.on('connection', () => {
 
 // app.listen(port, () => console.log("Server running on port " + port));
 server.listen(port, () => {
-    console.log(`listening on *:${port}`);
+    console.log(`listening on :${port}`);
 });
