@@ -19,7 +19,7 @@ function initMap() {
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
 
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); //Postion of input search box
 
     var infowindow = new google.maps.InfoWindow();
     var infowindowContent = document.getElementById('infowindow-content');
@@ -54,7 +54,7 @@ function initMap() {
         marker.setVisible(true);
 
         infowindowContent.children['place-name'].textContent = place.formatted_address;
-        //infowindowContent.children['place-id'].textContent = place.geometry.location;
+        infowindowContent.children['place-id'].textContent = place.geometry.location;
         infowindowContent.children['place-address'].textContent = place.formatted_address;
         infowindow.open(map, marker);
     });
@@ -108,7 +108,7 @@ function moveUserMarkerMouseUp() {
             const infoWindowContent = `
           <div class="infowindow-container">
             <p id="infowindow-address">${results[0].formatted_address}</p>
-            <p>Điều chỉnh vị trí hành khách đến vị trí này?</p>
+            <p>Điều chỉnh vị trí hành khách đến đây?</p>
             <div class="infowindow-btn btn-group">
               <button class="btn btn-success" 
                 onClick="document.getElementById('acceptChangeUserPosition').click()">
