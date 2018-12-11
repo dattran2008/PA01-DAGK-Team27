@@ -14,7 +14,7 @@ exports.add = customerEntity => {
 }
 
 exports.update = customerEntity => {
-    var sql = `update customer set state = '${customerEntity.state}' where id = ${customerEntity.id}`;
+    var sql = `update customer set state = '${customerEntity.state}' where id = ${parseInt(customerEntity.id)}`;
     return db.insert(sql);
 }
 

@@ -30,10 +30,10 @@ $("form").on("submit", function (e) {
                 $("#alert-success").hide(200);
             }, 3000);
 
-            // $("#name").val("");
-            // $("#phone").val("");
-            // $("#address").val("");
-            // $("#note").val("");
+            $("#name").val("");
+            $("#phone").val("");
+            $("#address").val("");
+            $("#note").val("");
         },
         error: function () {
             $("#alert-success").hide();
