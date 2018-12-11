@@ -3,26 +3,26 @@
 $("form").on("submit", function (e) {
     e.preventDefault();
     var name = $('#inputName').val();
-    var phone = $('#inputPhone').val();
+    var phone_number = $('#inputPhone').val();
     var address = $('#inputAddress').val();
     var note = $('#inputNotes').val();
     var state = REQ_STATUS_UNIDENTIFIED;
     //var date_request = moment().format('YYYY-MM-DD HH:mm');
 
-    const data = {
+    const dataReq = {
         name,
-        phone,
+        phone_number,
         address,
         note,
         state
     };
 
-    console.log(data);
+    console.log(dataReq);
     $.ajax({
         url: 'http://localhost:3000/request',
         type: 'POST',
         dataType: 'json',
-        data: JSON.stringify(data),
+        data: JSON.parse(JSON.stringify(dataReq)),
         success: function () {
             $("#alert-success").show(200);
             $("#alert-danger").hide();
@@ -30,11 +30,10 @@ $("form").on("submit", function (e) {
                 $("#alert-success").hide(200);
             }, 3000);
 
-            $("#name").val("");
-            $("#phone").val("");
-            $("#address").val("");
-            $("#note").val("");
-            console.log(data);
+            // $("#name").val("");
+            // $("#phone").val("");
+            // $("#address").val("");
+            // $("#note").val("");
         },
         error: function () {
             $("#alert-success").hide();
