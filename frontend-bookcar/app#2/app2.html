@@ -26,40 +26,21 @@
 			</div>
 		</h3>
 		<!-- Table -->
-		<div class="table-responsive">
-			<div>
-				<table class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th class="col-xs-1 col-sm-1 col-md-1">ID</th>
-							<th class="col-xs-3 col-sm-3 col-md-3">Họ tên</th>
-							<th class="col-xs-2 col-sm-2 col-md-2">Điện thoại</th>
-							<th class="col-xs-3 col-sm-3 col-md-3">Địa chỉ đón khách</th>
-							<th>Ghi chú (nếu có)</th>
-						</tr>
-					</thead>
-					<tbody id="dictionary">
-						<tr class="info">
-							<td id="w_id">
-
-							</td>
-							<td id="w_name">
-
-							</td>
-							<td id="w_phone" style="width: 250px">
-
-							</td>
-							<td id="w_address">
-
-							</td>
-							<td id="w_note">
-
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Address</th>
+					<th>Note</th>
+					<th>State</th>
+					<th>Date</th>
+				</tr>
+			</thead>
+			<tbody id="infor">
+			</tbody>
+		</table>
 	</div>
 
 	<!-- Google Map UI -->
@@ -74,7 +55,20 @@
 		<br>
 		<span id="place-address"></span>
 	</div>
-	<!-- End Map -->
+
+	<script id="infor-template" type="text/x-handlebars-template">
+		{{#each this}}
+			<tr data-id="{{id}}">
+				<td>{{id}}</td>
+				<td>{{name}}</td>
+				<td>{{phone_number}}</td>
+				<td>{{address}}</td>
+				<td>{{note}}</td>
+				<td>{{state}}</td>
+				<td>{{rdt}}</td>
+			</tr>
+		{{/each}}
+	</script>
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt-z3ICdN7F6QAM0cUuw21ZUF_BYKMfw0&libraries=places&callback=initMap"
 	 async defer></script>
@@ -84,7 +78,21 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	 crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
-	<!-- <script src="app2.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+	<script src="../assets/js/constant.js"></script>
+	<script src="app2.js"></script>
+
+	<!-- <script type="text/javascript">
+
+		var socket = io('http://localhost:3000');
+
+		socket.on('getCustomers', function(body) {
+			var source = document.getElementById('infor-template').innerHTML;
+        	var template = Handlebars.compile(source);
+        	var html = template(body);
+        	$('#infor').html(html);
+		});
+	</script> -->
 </body>
 
 </html>
