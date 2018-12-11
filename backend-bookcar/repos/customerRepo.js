@@ -18,29 +18,6 @@ exports.update = customerEntity => {
     return db.insert(sql);
 }
 
-
-// exports.add = requestEntity => {
-//   const {
-//     id,
-//     clientName,
-//     phone,
-//     address,
-//     date_submitted,
-//     note,
-//     status: statusReq,
-//     lat,
-//     lng
-//   } = requestEntity;
-
-//   const sql =
-//     "insert into `request`(`id`, `clientName`, `phone`, `address`, `date_submitted`, `note`, `status`, `lat`, `lng`)" +
-//     `values('${id}','${clientName}','${phone}','${address}', '${date_submitted}','${note}','${statusReq}',${lat},${lng});`;
-//   return db.insert(sql);
-// };
-
-
-
-
 exports.updateCoords = (newLat, newLng, reqId) => {
   const sql =
     "update `request` set `lat` = " +

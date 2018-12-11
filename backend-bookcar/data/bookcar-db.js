@@ -6,7 +6,7 @@ var createConnection = () => {
         port: '3306',
         user: 'root',
         password: '',
-        database: 'tester'
+        database: 'bookcar'
     });
 }
 
@@ -36,7 +36,6 @@ exports.insert = sql => {
             } else {
                 resolve(value);
             }
-
             cn.end();
         });
     });

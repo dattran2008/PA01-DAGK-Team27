@@ -1,28 +1,28 @@
 
 //Submit Request
-$("form").on("submit",function (e) {
+$("form").on("submit", function (e) {
     e.preventDefault();
     var name = $('#inputName').val();
     var phone = $('#inputPhone').val();
     var address = $('#inputAddress').val();
     var note = $('#inputNotes').val();
-   //var status = REQ_STATUS_UNIDENTIFIED;
+    var state = REQ_STATUS_UNIDENTIFIED;
     //var date_request = moment().format('YYYY-MM-DD HH:mm');
 
-    var data = {
-        'name': name,
-        'phone': phone,
-        'address': address,
-        'note': note
+    const data = {
+        name,
+        phone,
+        address,
+        note,
+        state
     };
 
     console.log(data);
-
     $.ajax({
-        url: 'http://localhost:3000/locate',
+        url: 'http://localhost:3000/request',
         type: 'POST',
         dataType: 'json',
-        data: {'Request': data},
+        data: JSON.stringify(data),
         success: function () {
             $("#alert-success").show(200);
             $("#alert-danger").hide();
@@ -34,7 +34,7 @@ $("form").on("submit",function (e) {
             $("#phone").val("");
             $("#address").val("");
             $("#note").val("");
-
+            console.log(data);
         },
         error: function () {
             $("#alert-success").hide();

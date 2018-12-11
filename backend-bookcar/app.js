@@ -1,10 +1,11 @@
-const express = require('express');
-const http = require('http');
-const app = express();
-const server = http.Server(app);
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const cors = require('cors');
+var express = require('express'), 
+    http = require('http'),
+    app = express(),
+    server = http.Server(app),
+    bodyParser = require('body-parser'),
+    morgan = require('morgan'),
+    cors = require('cors');
+
 const port = process.env.PORT || 3000;
 
 const customerCtrl = require('./apiControllers/customerController');
@@ -20,6 +21,11 @@ const verifyAccessTokenDriver = require('./repos/authRepo').verifyAccessTokenDri
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(
+    bodyParser.urlencoded({
+        extended: true
+    })
+);
 app.use(cors());
 
 app.get('/', (req, res) => {
