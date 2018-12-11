@@ -7,7 +7,6 @@ var express = require('express'),
     cors = require('cors');
 
 const port = process.env.PORT || 3000;
-
 const customerCtrl = require('./apiControllers/customerController');
 
 const staffCtrl = require('./apiControllers/staffControllers');
