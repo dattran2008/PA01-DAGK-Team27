@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>App#3</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="./google-map/map.css" />
+</head>
+
+<body>
+	<br>
+	<h1 style="text-align:center">
+		<span class="label label-danger"> App#3: REQUEST MANAGEMENT </span>
+	</h1>
+	<!-- Request List UI -->
+	<div class="container-fluid" style="padding-top: 2rem">
+		<h3>
+			<div class="nav nav-pills" style="padding-bottom: 1rem">
+				<li role="presentation" class="active">
+					<a href="#"> Request Table
+						<span class="badge"></span>
+					</a>
+				</li>
+			</div>
+		</h3>
+		<!-- Table -->
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Address</th>
+					<th>Note</th>
+					<th>State</th>
+					<th>Date</th>
+					<th>Driver</th>
+				</tr>
+			</thead>
+			<tbody id="infor">
+			</tbody>
+		</table>
+	</div>
+
+	<!-- Google Map UI -->
+	<input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+
+	<div id="map" style="margin-bottom: 50px"></div>
+	<div id="infowindow-content">
+		<span id="place-name" class="title"></span>
+		<br>
+			<!-- Place ID
+		<span id="place-id"></span> -->
+		<br>
+		<span id="place-address"></span>
+	</div>
+
+	<script id="infor-template" type="text/x-handlebars-template">
+		{{#each this}}
+			<tr data-id="{{id}}">
+				<td>{{id}}</td>
+				<td>{{name}}</td>
+				<td>{{phone_number}}</td>
+				<td>{{address}}</td>
+				<td>{{note}}</td>
+				<td>{{state}}</td>
+				<td>{{rdt}}</td>
+				<td></td>
+			</tr>
+		{{/each}}
+	</script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt-z3ICdN7F6QAM0cUuw21ZUF_BYKMfw0&libraries=places&callback=initMap"
+	 async defer></script>
+	<script src="./google-map/map.js"></script>
+	<!-- Another Script -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+	<script src="../assets/js/constant.js"></script>
+	<script src="app3.js"></script>
+	
+</body>
+
+</html>
