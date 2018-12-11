@@ -51,11 +51,15 @@ $(function () {
             state
         };
 
-        $.ajax({
+        var update = function () {
+            $.ajax({
             url: 'http://localhost:3000/request',
             type: 'PUT',
             dataType: 'json',
             data: JSON.parse(JSON.stringify(dataReq))
         })
+        }
+
+        setTimeout(update, 4000);
     })
 });
