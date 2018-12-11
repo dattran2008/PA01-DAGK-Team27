@@ -5,13 +5,14 @@
     <title>App#1</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
+    crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./app1.css">
 </head>
 
 <body>
     <br>
     <h1 style="text-align:center">
-        <span class="label label-danger"> App#1: Guest Request Service</span>
+        <span class="label label-info"> App#1: Guest Request Service</span>
     </h1>
 
     <!-- Guest Request UI -->
@@ -47,12 +48,14 @@
                 <button type="submit"" style=" font-size:20px; margin-left: 25em" id="search" class="btn btn-success">
                     Request
                 </button>
+
+                <!-- Messages -->
                 <div class="loginbox">
                     <div id="alert-success" class="alert alert-success">
                         <strong>Success!</strong>
                     </div>
                     <div id="alert-danger" class="alert alert-danger">
-                        <strong>Error!</strong>
+                        <strong>Request Error! Try again</strong>
                     </div>
                 </div>
             </form>
@@ -60,8 +63,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
